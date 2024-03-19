@@ -3,8 +3,8 @@ use <scad-utils/transformations.scad>
 use <scad-utils/shapes.scad>
 use <scad-utils/trajectory.scad>
 use <scad-utils/trajectory_path.scad>
-use <sweep.scad>
-use <skin.scad>  
+use <list-comprehension-demos/sweep.scad>
+use <list-comprehension-demos/skin.scad>  
 
 /*DES (Distorted Elliptical Saddle) Sculpted Profile for 6x3 and corne thumb 
 Version 2: Eliptical Rectangle
@@ -28,6 +28,7 @@ mirror([0,0,0])keycap(
 //  translate([6, 0, 0])rotate([0,0,15])keycap(keyID = 1, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
 //  translate([26, 2.2, 0])rotate([0,0,0])keycap(keyID = 2, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
 //}
+
 /*corne thumb low pro*/
 //color("gray"){
 //  translate([-15, -4, 0])rotate([0,0,30])keycap(keyID =3, cutLen = 0, Stem =true,  Dish = true, visualizeDish = false, crossSection = false);
@@ -66,6 +67,7 @@ stemCrossHeight = 4;
 extra_vertical  = 0.6;
 StemBrimDep     = 0.25; 
 stemLayers      = 50; //resolution of stem to cap top transition
+FDMHelp         = true;
 
 keyParameters = //keyParameters[KeyID][ParameterID]
 [
@@ -288,17 +290,23 @@ module keycap(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false,
   difference(){
     union(){
       difference(){
-        skin([for (i=[0:layers-1]) transform(translation(CapTranslation(i, keyID)) * rotation(CapRotation(i, keyID)), elliptical_rectangle(CapTransform(i, keyID), b = CapRoundness(i,keyID),fn=fn))]); //outer shell
+        skin([for (i=[-1:layers-1]) transform(translation(CapTranslation(i, keyID)) * rotation(CapRotation(i, keyID)), elliptical_rectangle(CapTransform(i, keyID), b = CapRoundness(i,keyID),fn=fn))]); //outer shell
         
         //Cut inner shell
         if(Stem == true){ 
-          translate([0,0,-.001])skin([for (i=[0:layers-1]) transform(translation(InnerTranslation(i, keyID)) * rotation(CapRotation(i, keyID)), elliptical_rectangle(InnerTransform(i, keyID), b = CapRoundness(i,keyID),fn=fn))]);
+          translate([0,0,-.001])skin([for (i=[-1:layers-1]) transform(translation(InnerTranslation(i, keyID)) * rotation(CapRotation(i, keyID)), elliptical_rectangle(InnerTransform(i, keyID), b = CapRoundness(i,keyID),fn=fn))]);
         }
       }
       if(Stem == true){
-        translate([0,0,StemBrimDep])rotate(stemRot)difference(){   
-          //cylinderical Stem body 
-          cylinder(d =5.5,KeyHeight(keyID)-StemBrimDep, $fn= 32);
+        translate([0,0,0]) rotate(stemRot) difference(){   
+          //cylinderical Stem body
+          union() { 
+            cylinder(d = 5.5,KeyHeight(keyID)-StemBrimDep, $fn= 32);
+            if (FDMHelp == true) {
+              translate([0, 0, (KeyHeight(keyID) - StemBrimDep) * 0.42]) scale([1, BottomLength(keyID) / BottomWidth(keyID), 1])
+              cylinder(d1 = 4, d2 = BottomWidth(keyID) - TopWidthDiff(keyID), h = (KeyHeight(keyID) - StemBrimDep) * 0.42, $fn = 32);
+            }
+          }
           skin(StemCurve);
           skin(StemCurve2);
         }
@@ -308,6 +316,9 @@ module keycap(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false,
     }
     
     //Cuts
+    
+    // cut off the extra bottom due to starting at layer -1
+    translate([-50, -50, -10]) cube([100, 100, 10], center = false);
     
     //Fonts
     if(Legends ==  true){
