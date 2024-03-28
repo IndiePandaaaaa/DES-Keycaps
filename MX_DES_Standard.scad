@@ -11,7 +11,7 @@ use <list-comprehension-demos/skin.scad>
 DES (Distorted Elliptical Saddle) Sculpted Profile for 6x3 and corne thumb 
 Version 2: Eliptical Rectangle
 */
-mirror([0, 0, 0]) keycap(
+mirror([0, 0, 0]) keycap_standard(
 keyID = 1, // change profile refer to KeyParameters Struct
 cutLen = 0, // Don't change. for chopped caps
 Stem = true, // tusn on shell and stems
@@ -316,7 +316,7 @@ function StemRadius(t, keyID) = pow(t / stemLayers, 3) * 3 + (1 - pow(t / stemLa
 
 
 ///----- KEY Builder Module
-module keycap(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false, Dish = true, Stem = false, crossSection
+module keycap_standard(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false, Dish = true, Stem = false, crossSection
 = true, Legends = false, homeDot = false, Stab = 0, short_travel = 0, o_ring = 0) {
 
   //Set Parameters for dish shape
