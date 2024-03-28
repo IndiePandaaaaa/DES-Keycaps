@@ -35,7 +35,7 @@ fn = 16;  //resolution of Rounded Rectangles: 60 for output
 layers = 40;  //resolution of vertical Sweep: 50 for output
 dotRadius = 0.55;   //home dot size
 //---Stem param
-Tol = 0.10;
+Tol = 0.05;
 stemRot = 0;
 stemWid = 7.55;
 stemLen = 5.55 ;
@@ -370,11 +370,12 @@ module keycap(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false,
 
             // add key travel blocker
             if (o_ring != 0 || short_travel != 0) {
-              travel_block = KeyHeight(keyID) - StemBrimDep - o_ring - short_travel - .1;
+              travel_distance = o_ring + short_travel - 1; // subtraction value from my silver switches
+              travel_block = KeyHeight(keyID) - StemBrimDep - travel_distance;
               travel_OD = 8.8; // DigiKey Silicone 009 O-ring
               travel_cone_height = 1;
 
-              translate([0, 0, short_travel + o_ring]) {
+              translate([0, 0, travel_distance]) {
                 cylinder(d1 = 5.5, d2 = travel_OD, h = travel_cone_height, $fn = 32);
                 translate([0, 0, travel_cone_height]) cylinder(d = travel_OD, h = travel_block -
                   travel_cone_height, $fn = 32);

@@ -10,7 +10,7 @@ use <list-comprehension-demos/skin.scad>
 Version 2: Eliptical Rectangle
 
 */
-mirror([0, 0, 0])keycap(
+mirror([0, 0, 0]) keycap(
 keyID = 3, //change profile refer to KeyParameters Struct
 cutLen = 0, //Don't change. for chopped caps
 Stem = true, //tusn on shell and stems
@@ -61,7 +61,7 @@ fn = 16;  //resolution of Rounded Rectangles: 60 for output
 layers = 40;  //resolution of vertical Sweep: 50 for output
 dotRadius = 1.25;   //home dot size
 //---Stem param
-Tol = 0.10;
+Tol = 0.05;
 stemRot = 0;
 stemWid = 7.2;
 stemLen = 5.5;
@@ -337,7 +337,7 @@ module keycap(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false,
 
             // add key travel blocker
             if (o_ring != 0 || short_travel != 0) {
-              travel_block = KeyHeight(keyID) - StemBrimDep - o_ring - short_travel - .1;
+              travel_block = KeyHeight(keyID) - StemBrimDep - o_ring - short_travel - 1; // subtraction value from my silver switches
               travel_OD = 8.8; // DigiKey Silicone 009 O-ring
               travel_cone_height = 1;
 
