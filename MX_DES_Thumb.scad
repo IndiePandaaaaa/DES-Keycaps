@@ -288,7 +288,7 @@ function StemRadius(t, keyID) = pow(t / stemLayers, 3) * 3 + (1 - pow(t / stemLa
 
 ///----- KEY Builder Module
 module keycap_thumb(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false, Dish = true, Stem = false, crossSection
-= true, Legends = false, homeDot = false, Stab = 0) {
+= true, Legends = false, homeDot = false, Stab = 0, short_travel = 0, o_ring = 0) {
 
   //Set Parameters for dish shape
   FrontPath = quantize_trajectories(FrontTrajectory(keyID), steps = stepsize, loop = false, start_position = $t * 4);
