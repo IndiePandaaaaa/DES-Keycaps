@@ -337,7 +337,7 @@ module keycap_thumb(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = 
 
             // add key travel blocker
             if (o_ring != 0 || short_travel != 0) {
-              travel_block = KeyHeight(keyID) - StemBrimDep - o_ring - short_travel - 1; // subtraction value from my silver switches
+              travel_block = KeyHeight(keyID) - StemBrimDep - o_ring - short_travel - .1; // subtraction value from my silver switches
               travel_OD = 8.8; // DigiKey Silicone 009 O-ring
               travel_cone_height = 1;
 
