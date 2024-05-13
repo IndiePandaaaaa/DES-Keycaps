@@ -21,8 +21,8 @@ visualizeDish = false, // turn on debug visual of Dish
 crossSection = false, // center cut to check internal
 homeDot = false, // turn on homedots
 Legends = false,  // not working
-short_travel = 1.2, // activation distance of the switches [for travel blocker]
-o_ring = 1.8 // thickness of uncompressed o-ring [for travel blocker]
+switch_activation_point = 0, // activation distance of the switches [for shorter travel of the switches]
+o_ring_thickness = 0 // thickness of uncompressed o-ring [for shorter travel of the switches]
 );
 
 //#translate([0,38,13])cube([18-5.7, 18-5.7,1],center = true);
@@ -317,7 +317,7 @@ function StemRadius(t, keyID) = pow(t / stemLayers, 3) * 3 + (1 - pow(t / stemLa
 
 ///----- KEY Builder Module
 module keycap_standard(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false, Dish = true, Stem = false, crossSection
-= true, Legends = false, homeDot = false, Stab = 0, short_travel = 0, o_ring = 0) {
+= true, Legends = false, homeDot = false, Stab = 0, switch_activation_point = 0, o_ring_thickness = 0) {
 
   //Set Parameters for dish shape
   FrontPath = quantize_trajectories(FrontTrajectory(keyID), steps = stepsize, loop = false, start_position = $t * 4);
@@ -369,8 +369,8 @@ module keycap_standard(keyID = 0, cutLen = 0, visualizeDish = false, rossSection
             }
 
             // add key travel blocker
-            if (o_ring != 0 || short_travel != 0) {
-              travel_distance = o_ring + short_travel - .1; // subtraction value from my silver switches
+            if (o_ring_thickness != 0 || switch_activation_point != 0) {
+              travel_distance = o_ring_thickness + switch_activation_point - .1; // subtraction value from my silver switches
               travel_block = KeyHeight(keyID) - StemBrimDep - travel_distance;
               travel_OD = 8.8; // DigiKey Silicone 009 O-ring
               travel_cone_height = 1;
