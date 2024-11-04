@@ -1,4 +1,4 @@
-use <scad-utils/morphology.scad> //for cheaper minwoski 
+se <scad-utils/morphology.scad> //for cheaper minwoski 
 use <scad-utils/transformations.scad>
 use <scad-utils/shapes.scad>
 use <scad-utils/trajectory.scad>
@@ -362,10 +362,8 @@ module keycap_standard(keyID = 0, cutLen = 0, visualizeDish = false, rossSection
 
             // add cone for more stable FDM printing
             if (FDMHelp == true) {
-              translate([0, 0, (KeyHeight(keyID) - StemBrimDep) * 0.42]) scale([1, BottomLength(keyID) /
-                BottomWidth(keyID), 1])
-                cylinder(d1 = 4, d2 = BottomWidth(keyID) - TopWidthDiff(keyID), h = (KeyHeight(keyID) -
-                  StemBrimDep) * 0.42, $fn = 32);
+              translate([0, 0, (KeyHeight(keyID) - StemBrimDep) * 0.42]) scale([1, BottomLength(keyID) / BottomWidth(keyID), 1])
+                cylinder(d1 = 4, d2 = BottomWidth(keyID) - TopWidthDiff(keyID), h = (KeyHeight(keyID) - StemBrimDep) * 0.42, $fn = 32);
             }
 
             // add key travel blocker
@@ -377,8 +375,8 @@ module keycap_standard(keyID = 0, cutLen = 0, visualizeDish = false, rossSection
 
               translate([0, 0, travel_distance]) {
                 cylinder(d1 = 5.5, d2 = travel_OD, h = travel_cone_height, $fn = 32);
-                translate([0, 0, travel_cone_height]) cylinder(d = travel_OD, h = travel_block -
-                  travel_cone_height, $fn = 32);
+                translate([0, 0, travel_cone_height]) 
+                  cylinder(d = travel_OD, h = travel_block - travel_cone_height, $fn = 32);
               }
             }
           }
