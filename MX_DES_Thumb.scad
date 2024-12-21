@@ -327,8 +327,10 @@ module keycap_thumb(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = 
 
             // add cone for more stable FDM printing
             if (FDMHelp == true) {
-              translate([0, 0, 4.5]) scale([1, BottomLength(keyID) / BottomWidth(keyID), 1])
+              translate([0, 0, 4.5]) scale([1, BottomLength(keyID) / BottomWidth(keyID), 1]) union() {
                 cylinder(d1 = 4, d2 = BottomWidth(keyID) - TopWidthDiff(keyID), h = 2);
+                translate([0, 0, 2]) cylinder(d=BottomWidth(keyID) - TopWidthDiff(keyID), h=KeyHeight(keyID) - StemBrimDep - 6);
+              }
             }
           }
           skin(StemCurve);

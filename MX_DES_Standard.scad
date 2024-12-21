@@ -12,7 +12,7 @@ $fn = $preview? 25:125;
 // DES (Distorted Elliptical Saddle) Sculpted Profile for 6x3 and corne thumb Version 2: Eliptical Rectangle
 
 mirror([0, 0, 0]) keycap_standard(
-  keyID = 1, // change profile refer to KeyParameters Struct
+  keyID = 0, // change profile refer to KeyParameters Struct
   cutLen = 0, // Don't change. for chopped caps
   Stem = true, // tusn on shell and stems
   Dish = true, // turn on dish cut
@@ -360,8 +360,10 @@ module keycap_standard(keyID = 0, cutLen = 0, visualizeDish = false, rossSection
 
             // add cone for more stable FDM printing
             if (FDMHelp == true) {
-              translate([0, 0, 4.5]) scale([1, BottomLength(keyID) / BottomWidth(keyID), 1])
+              translate([0, 0, 4.5]) scale([1, BottomLength(keyID) / BottomWidth(keyID), 1]) union() {
                 cylinder(d1 = 4, d2 = BottomWidth(keyID) - TopWidthDiff(keyID), h = 2);
+                translate([0, 0, 2]) cylinder(d=BottomWidth(keyID) - TopWidthDiff(keyID), h=KeyHeight(keyID) - StemBrimDep - 4);
+              }
             }
           }
           skin(StemCurve);
