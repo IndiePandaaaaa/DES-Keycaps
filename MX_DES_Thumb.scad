@@ -6,22 +6,20 @@ use <scad-utils/trajectory_path.scad>
 use <list-comprehension-demos/sweep.scad>
 use <list-comprehension-demos/skin.scad>
 
-/*DES (Distorted Elliptical Saddle) Sculpted Profile for 6x3 and corne thumb 
-Version 2: Eliptical Rectangle
+$fn = $preview? 25:125;
 
-*/
+// DES (Distorted Elliptical Saddle) Sculpted Profile for 6x3 and corne thumb Version 2: Eliptical Rectangle
+
 mirror([0, 0, 0]) keycap_thumb(
-keyID = 3, //change profile refer to KeyParameters Struct
-cutLen = 0, //Don't change. for chopped caps
-Stem = true, //tusn on shell and stems
-Dish = true, //turn on dish cut
-Stab = 0,
-visualizeDish = false, // turn on debug visual of Dish
-crossSection = false, // center cut to check internal
-homeDot = false, //turn on homedots
-Legends = false, // not working
-switch_activation_point = 0, // activation distance of the switches [for shorter travel of the switches]
-o_ring_thickness = 0 // thickness of uncompressed o-ring [for shorter travel of the switches]
+  keyID = 3, //change profile refer to KeyParameters Struct
+  cutLen = 0, //Don't change. for chopped caps
+  Stem = true, //tusn on shell and stems
+  Dish = true, //turn on dish cut
+  Stab = 0,
+  visualizeDish = false, // turn on debug visual of Dish
+  crossSection = false, // center cut to check internal
+  homeDot = false, //turn on homedots
+  Legends = false // not working
 );
 
 /*corne thumb hi pro*/
@@ -288,7 +286,7 @@ function StemRadius(t, keyID) = pow(t / stemLayers, 3) * 3 + (1 - pow(t / stemLa
 
 ///----- KEY Builder Module
 module keycap_thumb(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = false, Dish = true, Stem = false, crossSection
-= true, Legends = false, homeDot = false, Stab = 0, switch_activation_point = 0, o_ring_thickness = 0) {
+= true, Legends = false, homeDot = false, Stab = 0) {
 
   //Set Parameters for dish shape
   FrontPath = quantize_trajectories(FrontTrajectory(keyID), steps = stepsize, loop = false, start_position = $t * 4);
@@ -325,27 +323,12 @@ module keycap_thumb(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = 
         translate([0, 0, 0]) rotate(stemRot) difference() {
           //cylinderical Stem body
           union() {
-            cylinder(d = 5.5, KeyHeight(keyID) - StemBrimDep, $fn = 32);
+            cylinder(d = 5.5, KeyHeight(keyID) - StemBrimDep);
 
             // add cone for more stable FDM printing
             if (FDMHelp == true) {
-              translate([0, 0, (KeyHeight(keyID) - StemBrimDep) * 0.42]) scale([1, BottomLength(keyID) / BottomWidth(
-              keyID), 1])
-                cylinder(d1 = 4, d2 = BottomWidth(keyID) - TopWidthDiff(keyID), h = (KeyHeight(keyID) - StemBrimDep) *
-                  0.42, $fn = 32);
-            }
-
-            // add key travel blocker
-            if (o_ring_thickness != 0 || switch_activation_point != 0) {
-              travel_block = KeyHeight(keyID) - StemBrimDep - o_ring_thickness - switch_activation_point - .1; // subtraction value from my silver switches
-              travel_OD = 8.8; // DigiKey Silicone 009 O-ring
-              travel_cone_height = 1;
-
-              translate([0, 0, switch_activation_point + o_ring_thickness]) {
-                cylinder(d1 = 5.5, d2 = travel_OD, h = travel_cone_height, $fn = 32);
-                translate([0, 0, travel_cone_height])
-                  cylinder(d = travel_OD, h = travel_block - travel_cone_height, $fn = 32);
-              }
+              translate([0, 0, 4.5]) scale([1, BottomLength(keyID) / BottomWidth(keyID), 1])
+                cylinder(d1 = 4, d2 = BottomWidth(keyID) - TopWidthDiff(keyID), h = 2);
             }
           }
           skin(StemCurve);
