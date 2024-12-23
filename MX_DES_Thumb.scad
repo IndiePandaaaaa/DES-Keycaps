@@ -58,11 +58,13 @@ step = 6;   //resolution of ellipes
 fn = 16;  //resolution of Rounded Rectangles: 60 for output
 layers = 40;  //resolution of vertical Sweep: 50 for output
 dotRadius = 1.25;   //home dot size
+
 //---Stem param
 Tol = 0.05;
 stemRot = 0;
 stemWid = 7.2;
 stemLen = 5.5;
+stemDia = 5.7; // original 5.5
 stemCrossHeight = 4;
 extra_vertical = 0.6;
 StemBrimDep = 0.25;
@@ -323,7 +325,7 @@ module keycap_thumb(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = 
         translate([0, 0, 0]) rotate(stemRot) difference() {
           //cylinderical Stem body
           union() {
-            cylinder(d = 5.5, KeyHeight(keyID) - StemBrimDep);
+            cylinder(d = stemDia, KeyHeight(keyID) - StemBrimDep);
 
             // add cone for more stable FDM printing
             if (FDMHelp == true) {

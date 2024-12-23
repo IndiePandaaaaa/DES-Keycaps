@@ -32,11 +32,13 @@ step = 6;   //resolution of ellipes
 fn = 16;  //resolution of Rounded Rectangles: 60 for output
 layers = 40;  //resolution of vertical Sweep: 50 for output
 dotRadius = 0.55;   //home dot size
+
 //---Stem param
 Tol = 0.05;
 stemRot = 0;
 stemWid = 7.55;
-stemLen = 5.55 ;
+stemLen = 5.55;
+stemDia = 5.7; // original 5.5
 stemCrossHeight = 4;
 extra_vertical = 0.6;
 StemBrimDep = 0.25;
@@ -298,15 +300,13 @@ function StemRotation(t, keyID) =
   [
   ((1 - t) / stemLayers * XAngleSkew(keyID)), //X shift
   ((1 - t) / stemLayers * YAngleSkew(keyID)), //Y shift
-  ((1 - t) / stemLayers * ZAngleSkew(keyID))    //Z shift
+  ((1 - t) / stemLayers * ZAngleSkew(keyID))  //Z shift
   ];
 
 function StemTransform(t, keyID) =
   [
-      pow(t / stemLayers, StemExponent(keyID)) * (BottomWidth(keyID) - TopLenDiff(keyID) - wallthickness) + (1 -
-    pow(t / stemLayers, StemExponent(keyID))) * (stemWid - 2 * slop),
-      pow(t / stemLayers, StemExponent(keyID)) * (BottomLength(keyID) - TopLenDiff(keyID) - wallthickness) + (1 -
-    pow(t / stemLayers, StemExponent(keyID))) * (stemLen - 2 * slop)
+      pow(t / stemLayers, StemExponent(keyID)) * (BottomWidth(keyID) - TopLenDiff(keyID) - wallthickness) + (1 - pow(t / stemLayers, StemExponent(keyID))) * (stemWid - 2 * slop),
+      pow(t / stemLayers, StemExponent(keyID)) * (BottomLength(keyID) - TopLenDiff(keyID) - wallthickness) + (1 - pow(t / stemLayers, StemExponent(keyID))) * (stemLen - 2 * slop)
   ];
 
 function StemRadius(t, keyID) = pow(t / stemLayers, 3) * 3 + (1 - pow(t / stemLayers, 3)) * 1;
@@ -343,9 +343,8 @@ module keycap_standard(keyID = 0, cutLen = 0, visualizeDish = false, rossSection
 
         //Cut inner shell
         if (Stem == true) {
-          translate([0, 0, -.001])skin([for (i = [-1:layers - 1]) transform(translation(InnerTranslation(i,
-          keyID)) * rotation(CapRotation(i, keyID)), elliptical_rectangle(InnerTransform(i, keyID), b =
-          CapRoundness(i, keyID), fn = fn))]);
+          translate([0, 0, -.001]) skin([for (i = [-1:layers - 1]) 
+            transform(translation(InnerTranslation(i, keyID)) * rotation(CapRotation(i, keyID)), elliptical_rectangle(InnerTransform(i, keyID), b = CapRoundness(i, keyID), fn = fn))]);
         }
 
         // cut off the extra bottom due to starting at layer -1
@@ -356,7 +355,7 @@ module keycap_standard(keyID = 0, cutLen = 0, visualizeDish = false, rossSection
       if (Stem == true) {
         translate([0, 0, 0])rotate(stemRot)difference() {
           union() {
-            cylinder(d = 5.5, h = KeyHeight(keyID) - StemBrimDep);
+            cylinder(d = stemDia, h = KeyHeight(keyID) - StemBrimDep);
 
             // add cone for more stable FDM printing
             if (FDMHelp == true) {
