@@ -2,7 +2,7 @@
 // encoding: utf-8
 
 TOLERANCE = .2;
-$fn = $preview? 25:125;
+$fn = 8; //$preview? 25:125;
 
 STEM_OD = 5.7;
 STEM_HEIGHT = 4.5;
