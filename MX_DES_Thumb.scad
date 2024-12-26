@@ -11,41 +11,41 @@ $fn = $preview? 25:125;
 // DES (Distorted Elliptical Saddle) Sculpted Profile for 6x3 and corne thumb Version 2: Eliptical Rectangle
 
 mirror([0, 0, 0]) keycap_thumb(
-  keyID = 3, //change profile refer to KeyParameters Struct
-  cutLen = 0, //Don't change. for chopped caps
-  Stem = true, //tusn on shell and stems
-  Dish = true, //turn on dish cut
+  keyID = 0, // change profile refer to KeyParameters Struct
+  cutLen = 0, // Don't change. for chopped caps
+  Stem = true, // tusn on shell and stems
+  Dish = true, // turn on dish cut
   Stab = 0,
   visualizeDish = false, // turn on debug visual of Dish
   crossSection = false, // center cut to check internal
-  homeDot = false, //turn on homedots
+  homeDot = false, // turn on homedots
   Legends = false // not working
 );
 
-/*corne thumb hi pro*/
-//color("royalblue")translate([-0,33,0]){
-//  translate([-15, -4, 0])rotate([0,0,30])mirror([1,0,0])keycap_thumb(keyID = 0, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
-//  translate([6, 0, 0])rotate([0,0,15])keycap_thumb(keyID = 1, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
-//  translate([26, 2.2, 0])rotate([0,0,0])keycap_thumb(keyID = 2, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
-//}
-
-/*corne thumb low pro*/
-//color("gray"){
-//  translate([-15, -4, 0])rotate([0,0,30])keycap_thumb(keyID =3, cutLen = 0, Stem =true,  Dish = true, visualizeDish = false, crossSection = false);
-//  translate([6, 0, 0])rotate([0,0,15])keycap_thumb(keyID = 6, cutLen = 0, Stem =true,  Dish = true, visualizeDish = false, crossSection = false);
-//  translate([26, 2.2, 0])rotate([0,0,0])keycap_thumb(keyID = 7, cutLen = 0, Stem =true,  Dish = true, visualizeDish = false, crossSection = false);
-//}
-
-/*kyria Thumb*/
-//// translate([-39, 0, 0])rotate([0,0,30])translate([0,-19.5, 0])keycap_thumb(keyID = 15 , cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
-// translate([-39, 0, 0])rotate([0,0,30])translate([0,-19.5, 0])keycap_thumb(keyID = 13, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
-// translate([-39, 0, 0])rotate([0,0,30])translate([0,0, 0])keycap_thumb(keyID = 14, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
-//// translate([-39, 0, 0])rotate([0,0,30])translate([0, -1, 0])keycap_thumb(keyID = 13, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
-// //  translate([-17, 0, 0])rotate([0,0,30])translate([0, 1 , 0])keycap_thumb(keyID = 12, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
-// translate([-17, 0, 0])rotate([0,0,30])translate([0,-8.5, 0])mirror([1,0,0])keycap_thumb(keyID = 16, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
-// translate([-17, 0, 0])rotate([0,0,30])translate([0, 10, 0])mirror([1,0,0])keycap_thumb(keyID = 17, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
-// translate([6, 0, 0])rotate([0,0,15])keycap_thumb(keyID = 18, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
-// translate([26, 2.2, 0])rotate([0,0,0])keycap_thumb(keyID = 19, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
+variant = 0;
+if (variant == 1) {  // corne thumb hi pro
+  color("royalblue") translate([-0,33,0]) {
+    translate([-15, -4, 0]) rotate([0,0,30]) mirror([1,0,0]) keycap_thumb(keyID = 0, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
+    translate([6, 0, 0]) rotate([0,0,15]) keycap_thumb(keyID = 1, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
+    translate([26, 2.2, 0]) rotate([0,0,0]) keycap_thumb(keyID = 2, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
+  }
+} else if (variant == 2) {  // corne thumb low pro
+  color("gray"){
+    translate([-15, -4, 0])rotate([0,0,30])keycap_thumb(keyID =3, cutLen = 0, Stem =true,  Dish = true, visualizeDish = false, crossSection = false);
+    translate([6, 0, 0])rotate([0,0,15])keycap_thumb(keyID = 6, cutLen = 0, Stem =true,  Dish = true, visualizeDish = false, crossSection = false);
+    translate([26, 2.2, 0])rotate([0,0,0])keycap_thumb(keyID = 7, cutLen = 0, Stem =true,  Dish = true, visualizeDish = false, crossSection = false);
+  }
+} else if (variant == 3) {  // kyria Thumb
+  // translate([-39, 0, 0]) rotate([0,0,30]) translate([0,-19.5, 0]) keycap_thumb(keyID = 15 , cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
+  translate([-39, 0, 0]) rotate([0,0,30]) translate([0,-19.5, 0]) keycap_thumb(keyID = 13, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
+  translate([-39, 0, 0]) rotate([0,0,30]) translate([0,0, 0]) keycap_thumb(keyID = 14, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
+  // translate([-39, 0, 0]) rotate([0,0,30]) translate([0, -1, 0]) keycap_thumb(keyID = 13, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
+  // translate([-17, 0, 0]) rotate([0,0,30]) translate([0, 1 , 0]) keycap_thumb(keyID = 12, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
+  translate([-17, 0, 0]) rotate([0,0,30]) translate([0,-8.5, 0]) mirror([1,0,0]) keycap_thumb(keyID = 16, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
+  translate([-17, 0, 0]) rotate([0,0,30]) translate([0, 10, 0]) mirror([1,0,0]) keycap_thumb(keyID = 17, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
+  translate([6, 0, 0]) rotate([0,0,15]) keycap_thumb(keyID = 18, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
+  translate([26, 2.2, 0]) rotate([0,0,0]) keycap_thumb(keyID = 19, cutLen = 0, Stem =false,  Dish = true, visualizeDish = false, crossSection = false);
+}
 
 
 //#translate([0,38,13])cube([18-5.7, 18-5.7,1],center = true);
@@ -65,6 +65,7 @@ stemRot = 0;
 stemWid = 7.2;
 stemLen = 5.5;
 stemDia = 5.7; // original 5.5
+stemFaces = 8; // $fn for round stem
 stemCrossHeight = 4;
 extra_vertical = 0.6;
 StemBrimDep = 0.25;
@@ -325,20 +326,37 @@ module keycap_thumb(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = 
         translate([0, 0, 0]) rotate(stemRot) difference() {
           //cylinderical Stem body
           union() {
-            cylinder(d = stemDia, KeyHeight(keyID) - StemBrimDep);
+            cylinder(d = stemDia, h = KeyHeight(keyID) - StemBrimDep, $fn=stemFaces); // actual stem
 
             // add cone for more stable FDM printing
             if (FDMHelp == true) {
+              fdm_size = [BottomWidth(keyID) < BottomLength(keyID)? BottomWidth(keyID) - 5:BottomLength(keyID) - 5, 1.5, BottomWidth(keyID), BottomLength(keyID)];
+
+              // add a ring supporting the print of the stem
+              difference() {
+                union() {
+                  cylinder(d=stemDia + 2, h=3.5, $fn=stemFaces);
+                  translate([0, 0, .25]) cube([fdm_size[0], fdm_size[0], .5], center=true);
+                  translate([0, 0, .75]) {
+                    cube([fdm_size[0], fdm_size[1], fdm_size[1]], center=true);
+                    cube([fdm_size[1], fdm_size[0], fdm_size[1]], center=true);
+                  }
+                }
+                translate([0, 0, -.1]) cylinder(d=stemDia + .4, h=3.5 + .2, $fn=stemFaces);
+              }
+
+              // add cone for more stable FDM printing
               translate([0, 0, 4.5]) scale([1, BottomLength(keyID) / BottomWidth(keyID), 1]) union() {
-                cylinder(d1 = 4, d2 = BottomWidth(keyID) - TopWidthDiff(keyID), h = 2);
-                translate([0, 0, 2]) cylinder(d=BottomWidth(keyID) - TopWidthDiff(keyID), h=KeyHeight(keyID) - StemBrimDep - 6);
+                cylinder(d1 = 4, d2 = BottomWidth(keyID) - TopWidthDiff(keyID), h = 2, $fn=stemFaces);
+                translate([0, 0, 2]) cylinder(d=BottomWidth(keyID) - TopWidthDiff(keyID), h=KeyHeight(keyID) - StemBrimDep - 2 - 4.5, $fn=stemFaces);
               }
             }
           }
-          skin(StemCurve);
-          skin(StemCurve2);
+          translate([0, 0, $preview?-.1:0]) {
+            skin(StemCurve);
+            skin(StemCurve2);
+          }
         }
-
       }
       // todo: cut for fonts and extra pattern for light?
     }
@@ -346,7 +364,7 @@ module keycap_thumb(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = 
     //Cuts
 
     // cut off the extra bottom due to starting at layer -1
-    translate([-50, -50, -10]) cube([100, 100, 10], center = false);
+    translate([-50, -50, -10+($preview?.1:0)]) cube([100, 100, 10], center = false);
 
     //Fonts
     if (Legends == true) {

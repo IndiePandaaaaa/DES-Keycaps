@@ -5,7 +5,6 @@ use <scad-utils/trajectory.scad>
 use <scad-utils/trajectory_path.scad>
 use <list-comprehension-demos/sweep.scad>
 use <list-comprehension-demos/skin.scad>
-//use <z-butt.scad>
 
 $fn = $preview? 25:125;
 
@@ -20,7 +19,7 @@ mirror([0, 0, 0]) keycap_standard(
   visualizeDish = false, // turn on debug visual of Dish
   crossSection = false, // center cut to check internal
   homeDot = false, // turn on homedots
-  Legends = false  // not working
+  Legends = false // not working
 );
 
 //#translate([0,38,13])cube([18-5.7, 18-5.7,1],center = true);
@@ -38,7 +37,8 @@ Tol = 0.05;
 stemRot = 0;
 stemWid = 7.55;
 stemLen = 5.55;
-stemDia = 5.7; // original 5.5
+stemDia = 5.9; // original 5.5
+stemFaces = 8; // $fn for round stem
 stemCrossHeight = 4;
 extra_vertical = 0.6;
 StemBrimDep = 0.25;
@@ -353,20 +353,39 @@ module keycap_standard(keyID = 0, cutLen = 0, visualizeDish = false, rossSection
 
       // add stem
       if (Stem == true) {
-        translate([0, 0, 0])rotate(stemRot)difference() {
+        translate([0, 0, 0]) rotate(stemRot) difference() {
+          //cylinderical Stem body
           union() {
-            cylinder(d = stemDia, h = KeyHeight(keyID) - StemBrimDep);
+            cylinder(d = stemDia, h = KeyHeight(keyID) - StemBrimDep, $fn=stemFaces); // actual stem
 
             // add cone for more stable FDM printing
             if (FDMHelp == true) {
+              fdm_size = [BottomWidth(keyID) < BottomLength(keyID)? BottomWidth(keyID) - 5:BottomLength(keyID) - 5, 1.5, BottomWidth(keyID), BottomLength(keyID)];
+
+              // add a ring supporting the print of the stem
+              difference() {
+                union() {
+                  cylinder(d=stemDia + 2, h=3.5, $fn=stemFaces);
+                  translate([0, 0, .25]) cube([fdm_size[0], fdm_size[0], .5], center=true);
+                  translate([0, 0, .75]) {
+                    cube([fdm_size[0], fdm_size[1], fdm_size[1]], center=true);
+                    cube([fdm_size[1], fdm_size[0], fdm_size[1]], center=true);
+                  }
+                }
+                translate([0, 0, -.1]) cylinder(d=stemDia + .4, h=3.5 + .2, $fn=stemFaces);
+              }
+
+              // add cone for more stable FDM printing
               translate([0, 0, 4.5]) scale([1, BottomLength(keyID) / BottomWidth(keyID), 1]) union() {
-                cylinder(d1 = 4, d2 = BottomWidth(keyID) - TopWidthDiff(keyID), h = 2);
-                translate([0, 0, 2]) cylinder(d=BottomWidth(keyID) - TopWidthDiff(keyID), h=KeyHeight(keyID) - StemBrimDep - 4);
+                cylinder(d1 = 4, d2 = BottomWidth(keyID) - TopWidthDiff(keyID), h = 2, $fn=stemFaces);
+                translate([0, 0, 2]) cylinder(d=BottomWidth(keyID) - TopWidthDiff(keyID), h=KeyHeight(keyID) - StemBrimDep - 4, $fn=stemFaces);
               }
             }
           }
-          skin(StemCurve);
-          skin(StemCurve2);
+          translate([0, 0, $preview?-.1:0]) {
+            skin(StemCurve);
+            skin(StemCurve2);
+          }
         }
         // translate([0,0,-.001])skin([for (i=[0:stemLayers-1]) transform(translation(StemTranslation(i,keyID))*rotation(StemRotation(i, keyID)), rounded_rectangle_profile(StemTransform(i, keyID),fn=fn,r=StemRadius(i, keyID)))]); //Transition Support for taller profile
       }
@@ -374,6 +393,9 @@ module keycap_standard(keyID = 0, cutLen = 0, visualizeDish = false, rossSection
     }
 
     //Cuts
+
+    // cut off the extra bottom due to starting at layer -1
+    translate([-50, -50, -10 + ($preview? .1:0)]) cube([100, 100, 10], center = false);
 
     //Fonts
     if (Legends == true) {
@@ -418,7 +440,7 @@ module keycap_standard(keyID = 0, cutLen = 0, visualizeDish = false, rossSection
     }
   }
   //Homing dot
-
+  if (homeDot == true)translate([0, 0, KeyHeight(keyID) - DishHeightDif(keyID) - .25])sphere(d = dotRadius);
 }
 //------------------stems 
 
