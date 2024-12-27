@@ -4,7 +4,7 @@
 TOLERANCE = .2;
 $fn = 8; //$preview? 25:125;
 
-STEM_OD = 5.7;
+STEM_OD = 5.9;
 STEM_HEIGHT = 4.5;
 
 // cherry activation point

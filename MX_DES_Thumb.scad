@@ -342,7 +342,7 @@ module keycap_thumb(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = 
                     cube([fdm_size[1], fdm_size[0], fdm_size[1]], center=true);
                   }
                 }
-                translate([0, 0, -.1]) cylinder(d=stemDia + .4, h=3.5 + .2, $fn=stemFaces);
+                translate([0, 0, -.1]) cylinder(d=stemDia + .55, h=3.5 + .2, $fn=stemFaces);
               }
 
               // add cone for more stable FDM printing
