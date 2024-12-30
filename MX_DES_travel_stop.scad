@@ -1,11 +1,12 @@
 // created by IndiePandaaaaa|Lukas
 // encoding: utf-8
 
+use <MX_DES_Standard.scad>
+
 TOLERANCE = .2;
 $fn = 8; //$preview? 25:125;
 
-STEM_OD = 5.9;
-STEM_HEIGHT = 4.5;
+STEM_HEIGHT = 4.2;
 
 // cherry activation point
 CSILVER = 1.2;  // cherry mx silver
@@ -18,9 +19,10 @@ GLORIOUS_A40_THIN = 1.5;
 
 module travel_stop(activation_point, o_ring) {
   height = STEM_HEIGHT - activation_point - o_ring/2;
+  echo("height ", height);
   translate([0, 0, height/2]) difference() {
     cylinder(d=8.5, h=height, center=true); 
-    cylinder(d1=STEM_OD + TOLERANCE, d2=8.5, h=height + .2, center=true);
+    cylinder(d=getStemOD() + TOLERANCE, h=height + .2, center=true);
   }
 }
 
