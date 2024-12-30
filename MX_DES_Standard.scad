@@ -167,9 +167,9 @@ dishParameters = //dishParameter[keyID][ParameteID]
   //2.00u vert
     [13, 5.5, 5, -30, 4, 1.8, 8.5, 12, 1.5, 10, 8, 7, -10, 8.5, 12, 1.5], //R5
     [6, 3, -5, -50, 5, 1.8, 79.1, 95, 2, 6, 3.5, 13, -50, 79.1, 127, 2], //R5
-
-
   ];
+
+function getStemOD() = stemDia;
 
 function FrontForward1(keyID) = dishParameters[keyID][0];  //
 function FrontForward2(keyID) = dishParameters[keyID][1];  // 
@@ -360,24 +360,24 @@ module keycap_standard(keyID = 0, cutLen = 0, visualizeDish = false, rossSection
 
             // add cone for more stable FDM printing
             if (FDMHelp == true) {
-              fdm_size = [BottomWidth(keyID) < BottomLength(keyID)? BottomWidth(keyID) - 5:BottomLength(keyID) - 5, 1.5, BottomWidth(keyID), BottomLength(keyID)];
+              fdm_size = [BottomWidth(keyID) < BottomLength(keyID)? BottomWidth(keyID) - 5:BottomLength(keyID) - 5, 1.5, BottomWidth(keyID), BottomLength(keyID), 4];
 
               // add a ring supporting the print of the stem
               difference() {
                 union() {
-                  cylinder(d=stemDia + 2, h=3.5, $fn=stemFaces);
+                  cylinder(d=stemDia + 2, h=fdm_size[4], $fn=stemFaces);
                   translate([0, 0, .25]) cube([fdm_size[0], fdm_size[0], .5], center=true);
                   translate([0, 0, .75]) {
                     cube([fdm_size[0], fdm_size[1], fdm_size[1]], center=true);
                     cube([fdm_size[1], fdm_size[0], fdm_size[1]], center=true);
                   }
                 }
-                translate([0, 0, -.1]) cylinder(d=stemDia + .55, h=3.5 + .2, $fn=stemFaces);
+                translate([0, 0, -.1]) cylinder(d=stemDia + .55, h=fdm_size[4] + .2, $fn=stemFaces);
               }
 
               // add cone for more stable FDM printing
-              translate([0, 0, 4.5]) scale([1, BottomLength(keyID) / BottomWidth(keyID), 1]) union() {
-                cylinder(d1 = 4, d2 = BottomWidth(keyID) - TopWidthDiff(keyID), h = 2, $fn=stemFaces);
+              translate([0, 0, 4.2]) scale([1, BottomLength(keyID) / BottomWidth(keyID), 1]) union() {
+                cylinder(d1 = stemDia + 1.5, d2 = BottomWidth(keyID) - TopWidthDiff(keyID), h = 2, $fn=stemFaces);
                 translate([0, 0, 2]) cylinder(d=BottomWidth(keyID) - TopWidthDiff(keyID), h=KeyHeight(keyID) - StemBrimDep - 4, $fn=stemFaces);
               }
             }

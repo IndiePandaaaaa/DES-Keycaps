@@ -330,25 +330,25 @@ module keycap_thumb(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = 
 
             // add cone for more stable FDM printing
             if (FDMHelp == true) {
-              fdm_size = [BottomWidth(keyID) < BottomLength(keyID)? BottomWidth(keyID) - 5:BottomLength(keyID) - 5, 1.5, BottomWidth(keyID), BottomLength(keyID)];
+              fdm_size = [BottomWidth(keyID) < BottomLength(keyID)? BottomWidth(keyID) - 5:BottomLength(keyID) - 5, 1.5, BottomWidth(keyID), BottomLength(keyID), 4];
 
               // add a ring supporting the print of the stem
               difference() {
                 union() {
-                  cylinder(d=stemDia + 2, h=3.5, $fn=stemFaces);
+                  cylinder(d=stemDia + 2, h=fdm_size[4], $fn=stemFaces);
                   translate([0, 0, .25]) cube([fdm_size[0], fdm_size[0], .5], center=true);
                   translate([0, 0, .75]) {
                     cube([fdm_size[0], fdm_size[1], fdm_size[1]], center=true);
                     cube([fdm_size[1], fdm_size[0], fdm_size[1]], center=true);
                   }
                 }
-                translate([0, 0, -.1]) cylinder(d=stemDia + .55, h=3.5 + .2, $fn=stemFaces);
+                translate([0, 0, -.1]) cylinder(d=stemDia + .55, h=fdm_size[4] + .2, $fn=stemFaces);
               }
 
               // add cone for more stable FDM printing
-              translate([0, 0, 4.5]) scale([1, BottomLength(keyID) / BottomWidth(keyID), 1]) union() {
-                cylinder(d1 = 4, d2 = BottomWidth(keyID) - TopWidthDiff(keyID), h = 2, $fn=stemFaces);
-                translate([0, 0, 2]) cylinder(d=BottomWidth(keyID) - TopWidthDiff(keyID), h=KeyHeight(keyID) - StemBrimDep - 2 - 4.5, $fn=stemFaces);
+              translate([0, 0, 4.2]) scale([1, BottomLength(keyID) / BottomWidth(keyID), 1]) union() {
+                cylinder(d1 = stemDia + 1.5, d2 = BottomWidth(keyID) - TopWidthDiff(keyID), h = 2, $fn=stemFaces);
+                translate([0, 0, 2]) cylinder(d=BottomWidth(keyID) - TopWidthDiff(keyID), h=KeyHeight(keyID) - StemBrimDep - 4, $fn=stemFaces);
               }
             }
           }
@@ -364,7 +364,7 @@ module keycap_thumb(keyID = 0, cutLen = 0, visualizeDish = false, rossSection = 
     //Cuts
 
     // cut off the extra bottom due to starting at layer -1
-    translate([-50, -50, -10+($preview?.1:0)]) cube([100, 100, 10], center = false);
+    translate([-50, -50, -10 + ($preview? .1:0)]) cube([100, 100, 10], center = false);
 
     //Fonts
     if (Legends == true) {
