@@ -1,5 +1,15 @@
 # Pseudo Make Me Key Cap Profile
 
+## Fixed:
+- issue [#09](https://github.com/pseudoku/PseudoMakeMeKeyCapProfiles/issues/9): Missing z-butt.scad library
+- issue [#10](https://github.com/pseudoku/PseudoMakeMeKeyCapProfiles/issues/10): Cross is too loose
+- issue where the cap bottom face wasn't flat
+- issue with the stem having stability problems while FDM printing with 0.4mm nozzle
+
+## Additional features (Cherry MX Standard and Thumbs)
+- fdmHelp: added support for printing the caps with an FDM printer
+- travel_stop: ring to block vertical travel of the cap to reduce travel distance
+
 ## How to
 * make sure OpenSCAD is up to date.
 * unzip libraries.zip into your OpenSCAD libraries
